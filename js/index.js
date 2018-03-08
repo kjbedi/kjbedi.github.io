@@ -1,14 +1,24 @@
 //on resize
 $( window ).resize(function() {
 	$("#step1").center();
+	$(".spinner").center();
+	$(".roulette").center();
+	$("#info").verticalcenter();
 });
 
 //on ready
 $(document).ready(function(){
+	
     $("#step1").fadeIn(3000);
     $("#step1").center();
-	$(".main").delay(3000).fadeIn();
-	$("#step1").fadeOut();
+	$("#step1").fadeOut(3000);
+	$("#step2").center();
+	$("#step2").delay(6000).fadeIn(3000);
+	$("#step2").fadeOut(3000);
+	$(".main").delay(12000).fadeIn(3000);
+	$(".spinner").center();
+	$(".roulette").center();
+	$("#info").verticalcenter();
 });
 
 //custom
@@ -20,4 +30,13 @@ jQuery.fn.center = function () {
                                                 $(window).scrollLeft()) + "px");
     return this;
 }
+
+jQuery.fn.verticalcenter = function () {
+    this.css("position","absolute");
+    this.css("top", Math.max(0, (($(window).height() - $(this).outerHeight()) / 2) + 
+                                                $(window).scrollTop()) + "px");
+    return this;
+}
+
+
 
