@@ -2,7 +2,7 @@
 $( window ).resize(function() {
 	$("#step1").center();
 	$(".spinner").center();
-	$(".roulette").center();
+	// $(".roulette").center();
 	$("#info").verticalcenter();
 });
 
@@ -16,8 +16,16 @@ $(document).ready(function(){
 	$("#step2").delay(6000).fadeIn(3000);
 	$("#step2").fadeOut(3000);
 	$(".main").delay(12000).fadeIn(3000);
+ setTimeout(
+    function() {
+      $("#r").delay(12000).css("opacity","1");
+    }, 12000);
+	// $(".roulette").css("left","0");
+	// $(".roulette").css("right","0");
+
+	// 
 	$(".spinner").center();
-	$(".roulette").center();
+	// $(".roulette").center();
 	$("#info").verticalcenter();
 });
 
