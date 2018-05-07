@@ -1,39 +1,137 @@
-<html>
-	<body>
-		<textarea id = "t" style = "height:100%;width:100%">
-		</textarea>
-	</body>
-	<script src="https://rtcmulticonnection.herokuapp.com/dist/RTCMultiConnection.min.js"></script>
-	<script src="https://rtcmulticonnection.herokuapp.com/socket.io/socket.io.js"></script>
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/index.css">
+
+    <title>Himani Sethi</title>
+  </head>
+  <body>
+	<h1 class = "hide" id = "step1"><i>"Happy Birthday Bread"</i></h1>
+	<img class = "hide" id = "step2" src = "assets/cake.jpg"></img>
+
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark main hide">
+		<a class="navbar-brand" href="#"><h1>HAPPY BIRTHDAY SETHI</h1></a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<ul class="navbar-nav mr-auto">
+		
+				<li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					SEE WISH BY
+					</a>
+					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+						<!-- <a onclick = "play('jasraj1')" class="dropdown-item" href="#">JASRAJ</a> -->
+						<a onclick = "play('kanika')" class="dropdown-item" href="#">KANIKA</a>
+						<a onclick = "play('kaushik')"  class="dropdown-item" href="#">KAUSHIK</a>
+						<a onclick = "play('karan')"  class="dropdown-item" href="#">KARAN</a>
+						<a onclick = "play('kajol')"  class="dropdown-item" href="#">KAJOL</a>
+						<a onclick = "play('manish')"  class="dropdown-item" href="#">MANISH</a>
+						<a onclick = "play('kritika')"  class="dropdown-item" href="#">KRITIKA</a>
+					</div>
+				</li>
+			</ul>
+		</div>
+	</nav>
+<div id = "r" style = "opacity:0;padding:70px" class = "">
+
+	<h4 style = "padding:50px">HIT UP THE <u>SPIN</u> BUTTON TO DISPLAY A WISH :)</h4>
+	<button onclick = "start();" class="btn btn-large btn-success start"> SPIN </button>
+	<div style = "border:4px solid;float:left" class="roulette">
+		<img src="assets/jasraj.png"/>
+		<img src="assets/kanika.png"/>
+		<img src="assets/kaushik.PNG"/>
+		<img src="assets/karan.png"/>
+		<img src="assets/kajol.png"/>
+		<img src="assets/manish.png"/>
+		<img src="assets/kritika.png"/>
+	</div>
+	
+	
+	<video style = "width:1000px;height:600px" id = "vid"></video>
+
+
+
+</div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="js/jquery.js"></script>
+    <script src="js/popper.js"></script>
+    <script src="js/bootstrap.js"></script>
+    <script src="js/index.js"></script>
+    <script src="js/jqueryui.js"></script>
+    <script src="js/roulette.js"></script>
 	<script>
-		var connection = new RTCMultiConnection();
-		connection.socketURL = 'https://rtcmulticonnection.herokuapp.com:443/';
-		connection.session = {
-			data:true
-		};
-		connection.checkPresence('room-id', function(isRoomExist, roomid) {
-			if (isRoomExist === true) {
-				connection.join(roomid);
-			} else {
-				connection.open(roomid);
-			}
-		});
+
+	var option = {
+
+	  speed : 10,
+	  duration : 3,
+	  stopImageNumber : getRandomInt(0, 6),
+	  startCallback : function() {
+		console.log('start');
+	  },
+	  slowDownCallback : function() {
+		console.log('slowDown');
+	  },
+	  stopCallback : function($stopElm) {
+		console.log('stop');
+		var vidName = "";
+		if(option.stopImageNumber == 0){
+			vidName = "jasraj1";
+		}
+		if(option.stopImageNumber == 1){
+			vidName = "kanika";
+		}
+		if(option.stopImageNumber == 2){
+			vidName = "kaushik";
+		}
+		if(option.stopImageNumber == 3){
+			vidName = "karan";
+		}
+		if(option.stopImageNumber == 4){
+			vidName = "kajol";
+		}
+		if(option.stopImageNumber == 5){
+			vidName = "manish";
+		}
+		if(option.stopImageNumber == 6){
+			vidName = "kritika";
+		}
 		
+		document.getElementById("vid").setAttribute("src","assets/"+vidName+".mp4");
+		var v = document.getElementById("vid");
+		v.play();
+		console.log(option.stopImageNumber);
 		
-		
-		var t = document.getElementById("t");	
-		t.onkeypress = function(e){
-			var key = String.fromCharCode(e.keyCode);
-			var string = t.value+key;
-			connection.send(string);
-			console.log("sent");
-		};
-		connection.onmessage = function(event) {
-			console.log("received");
-			var string = event.data;
-			t.value = string;
-		};
-		
-	</script>
+	  }
+	}
+	$('div.roulette').roulette(option);
+function start(){
+
+	var rouletter = $('div.roulette');
+	option.stopImageNumber = getRandomInt(0, 6);
+	rouletter.roulette('option', option);	
+	rouletter.roulette('start');	
+
+}
+function play(name){
+	document.getElementById("vid").setAttribute("src","assets/"+name+".mp4");
+		var v = document.getElementById("vid");
+		v.play();
+}
+function getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+</script>
+
+  </body>
 </html>
